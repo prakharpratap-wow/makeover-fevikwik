@@ -1,0 +1,58 @@
+@use '../../styles/variables' as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  z-index: 100;
+  
+  .brand-logo {
+    color: $accent-yellow;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    
+    .makeover-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba($accent-yellow, 0.4);
+      margin: 0;
+    }
+    
+    .sub-text {
+      font-size: 0.7rem;
+      display: block;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+
+  .hamburger-menu {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 18px;
+    width: 24px;
+    
+    span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background-color: $accent-yellow;
+      border-radius: 2px;
+    }
+  }
+}
