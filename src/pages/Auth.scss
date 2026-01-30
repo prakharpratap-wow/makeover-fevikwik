@@ -1,0 +1,72 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+
+    .auth-card {
+        border-radius: 4px;
+        border: 1px solid #FFF;
+        background-color: rgb(62 115 172);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        box-shadow: 0 0 5px 3px rgba(3, 34, 87, 0.25);
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        padding: 22px;
+        position: relative;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 8%;
+            width: 25px;
+            height: 12px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 80%);
+            filter: blur(4px);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .login-title {
+            color: #F2ED2E;
+            text-align: center;
+            font-family: "Elza Trial";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+
+        .otp-warning-text {
+            color: #09152D;
+            font-family: "Elza Trial";
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.2px;
+            margin-bottom: 5px;
+        }
+
+        .powered-by-icon {
+            img {
+                height: 25px;
+            }
+        }
+
+
+
+
+
+
+    }
+}

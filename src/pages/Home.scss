@@ -1,39 +1,89 @@
-@use '../styles/variables' as *;
+// @use '../styles/variables' as *;
+
+// .home-content {
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 80px 20px 40px;
+//   margin-top: 100px;
+
+//   .action-area {
+//     margin-top: auto;
+//     width: 100%;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     gap: 1.5rem;
+
+//     .powered-by {
+//       color: white;
+//       font-size: 0.8rem;
+//       text-transform: uppercase;
+//       letter-spacing: 1px;
+//       opacity: 0.8;
+
+//       span {
+//         font-weight: bold;
+//         color: $accent-yellow;
+//       }
+//     }
+
+//     .capture-btn {
+//       width: 80%;
+//       max-width: 300px;
+//       font-size: 1.2rem;
+//     }
+//   }
+// }
+
+
 
 .home-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 80px 20px 40px; 
-  margin-top: 70px;
-  
-  .action-area {
-    margin-top: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    
-    .powered-by {
-      color: white;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: 0.8;
-      
-      span {
-        font-weight: bold;
-        color: $accent-yellow;
-      }
+  .powered-by-icon {
+    margin: 20px 0px;
+
+    img {
+      height: 24px;
     }
-    
-    .capture-btn {
-      width: 80%;
-      max-width: 300px;
-      font-size: 1.2rem;
+  }
+
+  .theme-btn {
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(180deg, #FFF 0%, #03678D 52.4%, #FFF 100%);
+    width: 130px;
+    height: 40px;
+    display: grid;
+    place-content: center;
+    margin-bottom: 5px;
+
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: 8%;
+      width: 25px;
+      height: 12px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 80%);
+      filter: blur(4px);
+      z-index: 3;
+      pointer-events: none;
     }
+
+    .theme-name {
+      background-color: #82a7cc;
+      width: 128px;
+      height: 38px;
+      display: grid;
+      place-content: center;
+      border-radius: 16px;
+
+
+    }
+
   }
 }

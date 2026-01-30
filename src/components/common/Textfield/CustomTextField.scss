@@ -1,0 +1,61 @@
+#custom-tf-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 600px;
+    font-family: sans-serif;
+}
+
+.custom-tf-wrapper {
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: 8%;
+        width: 25px;
+        height: 12px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 80%);
+        filter: blur(4px);
+        z-index: 3;
+        pointer-events: none;
+    }
+}
+
+.custom-tf-input {
+    width: 100%;
+    height: 38px;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    padding: 0 25px;
+    background: #82a7cc;
+    backdrop-filter: none;
+    color: #003374;
+    font-size: 14px;
+
+    &::placeholder {
+        color: #003374;
+        font-family: "Elza Trial";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.28px;
+        text-align: center;
+    }
+
+    &:focus {
+        background: #82a7cc;
+
+    }
+}
+
+.text-field-wrapper {
+    border-radius: 50px;
+    padding: 1px;
+    background: linear-gradient(180deg, #FFF 0%, #03678D 52.4%, #FFF 100%);
+    width: 100%;
+}
