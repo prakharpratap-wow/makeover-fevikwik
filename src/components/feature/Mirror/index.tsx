@@ -1,5 +1,6 @@
 import { forwardRef, useRef, useState, useImperativeHandle, useEffect } from 'react';
 import Button from '../../common/Button';
+import transparentFrame from "../../../assets/transparent-frame.png";
 import './style.scss';
 
 export interface MirrorHandle {
@@ -110,6 +111,7 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
     return (
         <div className="mirror-wrapper">
             <div className="mirror-frame-container">
+                <img src={transparentFrame} alt="Frame" className="mirror-frame-img" />
                 <div className="camera-container">
                     {isCameraActive && (
                         <video
