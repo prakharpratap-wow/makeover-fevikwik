@@ -62,7 +62,6 @@ const Capture: React.FC = () => {
                         setIsCameraActive={setIsCameraActive}
                         onCapture={handleCapture}
                     />
-                    {/* Hidden file input for gallery upload */}
                     <input
                         type="file"
                         accept="image/*"

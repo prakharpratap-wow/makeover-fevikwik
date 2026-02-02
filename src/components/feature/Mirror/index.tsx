@@ -2,6 +2,7 @@ import { forwardRef, useRef, useState, useImperativeHandle, useEffect } from 're
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import transparentFrame from "../../../assets/transparent-frame.png";
+import ellipse from "../../../assets/Ellipse_6.png"
 import './style.scss';
 
 export interface MirrorHandle {
@@ -190,7 +191,7 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
             </div>
 
             {showControls && (
-                <div className="mirror-controls mt-3 d-flex gap-2 justify-content-center">
+                <div className="mirror-controls mt-3 ">
                     <input
                         type="file"
                         accept="image/*"
@@ -199,18 +200,20 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
                         onChange={handleFileChange}
                     />
                     {isCameraActive && (
-                        <>
+                        <div>
+
+                            <div className='d-flex justify-content-center mb-4'>
+                                <img src={ellipse} alt="Ellipse" onClick={handleCapture} />
+                            </div>
+
                             <Button
-                                label="CLICK"
-                                onClick={handleCapture}
-                            />
-                            <Button
-                                label="UPLOAD"
+                                label="Upload"
                                 onClick={handleUploadClick}
+                                style={{ padding: "5.5px 40px", fontSize: "14px" }}
                             />
-                        </>
+                        </div>
                     )}
-                    {capturedImage && (
+                    {/* {capturedImage && (
                         <Button
                             label="RETAKE"
                             onClick={handleRetake}
@@ -219,7 +222,7 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
                     <Button
                         label="CANCEL"
                         onClick={handleClose}
-                    />
+                    /> */}
                 </div>
             )}
         </div>

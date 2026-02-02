@@ -10,17 +10,12 @@
 .custom-tf-wrapper {
     position: relative;
 
-    &::before {
-        content: '';
+    .shine {
         position: absolute;
-        top: -3px;
-        left: 8%;
-        width: 25px;
+        top: -19px;
+        left: -25px;
+        width: 48px;
         height: 12px;
-        background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 80%);
-        filter: blur(4px);
-        z-index: 3;
-        pointer-events: none;
     }
 }
 
@@ -38,7 +33,6 @@
 
     &::placeholder {
         color: #003374;
-        font-family: "Elza Trial";
         font-size: 14px;
         font-style: normal;
         font-weight: 500;

@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import MobileLayout from '../components/layout/MobileLayout';
 import Header from '../components/layout/Header';
 import Button from '../components/common/Button';
+import CustomTextField from '../components/common/Textfield';
 import { useMakeover } from '../context/MakeoverContext';
 import poweredBy from "../assets/poweredby.png";
-import '../styles/auth.scss'; // New SCSS for auth pages
+import '../styles/auth.scss';
 
 const Register: React.FC = () => {
     const navigate = useNavigate();
     const { setUserData } = useMakeover();
     const [formData, setFormData] = useState({
         name: '',
-        phone: '',
+        whatsapp: '',
         email: '',
         terms: false,
         promo: false
@@ -27,7 +28,7 @@ const Register: React.FC = () => {
     };
 
     const handleSendOtp = () => {
-        if (!formData.name || !formData.phone || !formData.terms) {
+        if (!formData.name || !formData.whatsapp || !formData.terms) {
             alert("Please fill all required fields and accept terms.");
             return;
         }
@@ -39,41 +40,39 @@ const Register: React.FC = () => {
         <MobileLayout>
             <Header />
             <div className='home-content d-flex flex-column align-items-center justify-content-center'>
-                <div className="auth-card">
+                <div className="auth-card" style={{ backgroundSize: "contain" }}>
                     <h2 className="auth-title">REGISTER NOW TO <br /> PARTICIPATE</h2>
 
-                    <div className="form-group">
-                        <input
-                            type="text"
+                    <div className="mb-2">
+                        <CustomTextField
+                            placeholder="Name"
                             name="name"
-                            placeholder="Name*"
-                            className="auth-input"
                             value={formData.name}
                             onChange={handleChange}
                         />
                     </div>
-                    <div className="form-group">
-                        <input
-                            type="tel"
-                            name="phone"
-                            placeholder="Phone no*"
-                            className="auth-input"
-                            value={formData.phone}
+
+                    <div className="mb-2">
+                        <CustomTextField
+                            placeholder="Whatsapp No"
+                            name="whatsapp"
+                            value={formData.whatsapp}
                             onChange={handleChange}
                         />
                     </div>
-                    <div className="form-group">
-                        <input
-                            type="email"
-                            name="email"
+
+                    <div className="mb-2">
+                        <CustomTextField
                             placeholder="Email ID"
-                            className="auth-input"
+                            name="email"
                             value={formData.email}
                             onChange={handleChange}
                         />
                     </div>
 
-                    <div className="form-check text-start mt-3">
+
+
+                    <div className="form-check-t text-start mt-3">
                         <label className="checkbox-container">
                             <input
                                 type="checkbox"
@@ -82,10 +81,10 @@ const Register: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <span className="checkmark"></span>
-                            <span className="label-text">I am above 18 and would like to accept <a href="#">T&Cs</a> & <a href="#">Privacy policy</a> of Pidilite.</span>
+                            <span className="label-text">I am above 18 and would like to accept <a href="#">{"T&Cs"}</a> & <a href="#">Privacy policy</a> of Pidilite.</span>
                         </label>
                     </div>
-                    <div className="form-check text-start mt-2">
+                    <div className="form-check-t text-start mt-2">
                         <label className="checkbox-container">
                             <input
                                 type="checkbox"
@@ -98,10 +97,11 @@ const Register: React.FC = () => {
                         </label>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 d-flex justify-content-center">
                         <Button
                             label="Send OTP"
                             onClick={handleSendOtp}
+                            style={{ fontSize: "14px", padding: "7px 40px" }}
                         />
                     </div>
 

@@ -4,10 +4,7 @@
 
   padding: 1rem 1.5rem;
   width: 100%;
-  // position: absolute;
-  // top: 20px;
-  // left: 0;
-  // z-index: 100;
+
 
   .brand-logo {
     color: $accent-yellow;
@@ -33,6 +30,14 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
+  }
+
+  .choose-theme {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: normal;
+    color: #F2ED2F;
+    text-transform: uppercase;
   }
 
   .hamburger-menu {

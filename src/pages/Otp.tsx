@@ -6,6 +6,7 @@ import Button from '../components/common/Button';
 import { useMakeover } from '../context/MakeoverContext';
 import poweredBy from "../assets/poweredby.png";
 import '../styles/auth.scss';
+import CustomTextField from '../components/common/Textfield';
 
 const Otp: React.FC = () => {
     const navigate = useNavigate();
@@ -45,25 +46,25 @@ const Otp: React.FC = () => {
         <MobileLayout>
             <Header />
             <div className='home-content d-flex flex-column align-items-center justify-content-center'>
-                <div className="auth-card">
+                <div className="auth-card" style={{ backgroundSize: "cover", paddingBottom: "0px" }}>
                     <h2 className="auth-title">Enter 4 Digit <br /> OTP Code</h2>
 
-                    <div className="form-group mb-4">
-                        <input
-                            type="text"
-                            placeholder="1234"
-                            className="auth-input text-center"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            maxLength={4}
-                            style={{ letterSpacing: '5px', fontSize: '1.2rem' }}
-                        />
-                    </div>
+                    <CustomTextField
+                        placeholder="Enter OTP"
+                        name="otp"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        maxLength={4}
+                        style={{ letterSpacing: '5px', fontSize: '1.2rem' }}
+                    />
 
-                    <div>
+
+
+                    <div className='d-flex justify-content-center mt-4'>
                         <Button
                             label="Verify OTP"
                             onClick={handleVerify}
+                            style={{ fontSize: "14px", padding: "7px 40px" }}
                         />
                     </div>
 

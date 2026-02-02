@@ -6,11 +6,18 @@ import Button from '../components/common/Button';
 import { useMakeover } from '../context/MakeoverContext';
 import transparentFrame from "../assets/transparent-frame.png";
 import '../components/feature/Mirror/style.scss';
+import poweredBy from "../assets/poweredby.png";
 
 const Result: React.FC = () => {
     const navigate = useNavigate();
     const { capturedImage, selectedTheme, setResultImage, resultImage } = useMakeover();
     const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        if (!capturedImage) {
+            navigate('/capture');
+        }
+    }, [capturedImage, navigate]);
 
     useEffect(() => {
         // Simulate API call
@@ -34,7 +41,6 @@ const Result: React.FC = () => {
     };
 
     if (!capturedImage) {
-        React.useEffect(() => { navigate('/capture'); }, [navigate]);
         return null;
     }
 
@@ -49,11 +55,9 @@ const Result: React.FC = () => {
                             <div className="camera-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                                 {isLoading ? (
                                     <div className="text-center p-3">
-                                        {/* "The loading copy will be pasted here" - User's Image 4 */}
                                         <h2 style={{ color: '#F4E06D', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                                             The loading <br /> copy <br /> will be <br /> pasted <br /> here
                                         </h2>
-                                        {/* Loading spinner or animation could go here */}
                                         <div className="spinner-border text-light mt-3" role="status">
                                             <span className="visually-hidden">Loading...</span>
                                         </div>
@@ -65,18 +69,21 @@ const Result: React.FC = () => {
                         </div>
                     </div>
 
+                    <div className='powered-by-icon'>
+                        <img src={poweredBy} alt="poweredBy" />
+                    </div>
+
                     {!isLoading && (
                         <div className="mt-4 w-100 d-flex gap-2 justify-content-center">
                             <Button
                                 label="Phir se Makeover"
                                 onClick={handleRetake}
+                                style={{ whiteSpace: "nowrap", fontSize: "14px", padding: "11px 15px" }}
                             />
-                            {/* "Generate Video" button style might need adjustment to match design, reusing Button for now or custom */}
                             <Button
                                 label="Generate Video"
                                 onClick={handleGenerateVideo}
-                                // Custom styling for secondary button if needed, doing inline for speed
-                                style={{ background: 'linear-gradient(180deg, #AABCCF 0%, #ECEFF4 100%)', color: '#000' }}
+                                style={{ background: 'linear-gradient(180deg, #AABCCF 0%, #ECEFF4 100%)', color: '#003374', whiteSpace: "nowrap", fontSize: "14px", padding: "11px 15px" }}
                             />
                         </div>
                     )}

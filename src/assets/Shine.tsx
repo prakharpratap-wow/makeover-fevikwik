@@ -1,6 +1,6 @@
 const Shine = () => {
     return (
-        <div>
+        <div className="shine">
             <svg xmlns="http://www.w3.org/2000/svg" width="122" height="38" viewBox="0 0 122 38" fill="none">
                 <g filter="url(#filter0_f_167_4)">
                     <ellipse cx="61" cy="19" rx="58" ry="16" fill="url(#paint0_radial_167_4)" />

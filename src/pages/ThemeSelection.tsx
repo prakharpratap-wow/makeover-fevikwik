@@ -6,6 +6,7 @@ import Button from '../components/common/Button';
 import { useMakeover } from '../context/MakeoverContext';
 import transparentFrame from "../assets/transparent-frame.png";
 import '../components/feature/Mirror/style.scss';
+import Shine from '../assets/Shine';
 const THEMES = ['Lol', 'Pookie', 'Dhinchak', 'Macho'];
 
 const ThemeSelection: React.FC = () => {
@@ -54,31 +55,51 @@ const ThemeSelection: React.FC = () => {
                     </div>
 
                     <div className="mt-4 w-100 d-flex flex-column align-items-center gap-3">
-                        <div className="d-flex flex-wrap justify-content-center gap-2">
+                        {/* <div className="d-flex flex-wrap justify-content-center gap-2">
                             {THEMES.map((theme) => (
                                 <div
                                     key={theme}
-                                    className={`theme-btn ${selectedTheme === theme ? 'selected' : ''}`} // Add selected style in CSS if needed
+                                    className={`theme-btn ${selectedTheme === theme ? 'selected' : ''}`}
                                     onClick={() => handleThemeSelect(theme)}
-                                    style={{ cursor: 'pointer', border: selectedTheme === theme ? '2px solid yellow' : 'none' }} // Inline style for quick feedback
+                                    style={{ cursor: 'pointer', border: selectedTheme === theme ? '2px solid yellow' : 'none' }}
                                 >
+                                    <Shine />
                                     <div className="theme-name">
                                         {theme}
                                     </div>
                                 </div>
                             ))}
+                        </div> */}
+                        <div className="d-flex flex-wrap justify-content-center" style={{ maxWidth: "400px" }}>
+                            {THEMES.map((theme) => (
+                                <div key={theme} className="p-1">
+                                    <div
+                                        className={`theme-btn ${selectedTheme === theme ? 'selected' : ''}`}
+                                        onClick={() => handleThemeSelect(theme)}
+                                        style={{
+                                            cursor: 'pointer',
+                                            border: selectedTheme === theme ? '2px solid yellow' : 'none'
+                                        }}
+                                    >
+                                        <Shine />
+                                        <div className="theme-name">{theme}</div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
 
+
                         <Button
-                            label="CHUTKI MEIN MAKEOVER"
+                            label="Chutki Mein Makeover"
                             onClick={handleMakeover}
+                            style={{ padding: "13px 40px", fontSize: "18px" }}
                         />
 
                         <div
                             onClick={handleSurpriseMe}
                             style={{ color: '#F4E06D', textDecoration: 'underline', cursor: 'pointer', marginTop: '10px' }}
                         >
-                            Surprise Me!
+                            Surprise Me
                         </div>
                     </div>
                 </div>

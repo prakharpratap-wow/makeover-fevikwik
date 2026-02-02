@@ -11,12 +11,11 @@ interface ButtonProps {
 
 const Button = ({ label, onClick, type = "button", style }: ButtonProps) => {
     return (
-        <div className='btn-wrapper'>
+        <div className='btn-wrapper' onClick={onClick}>
             <Shine />
             <button
                 type={type}
                 className="glossy-btn"
-                onClick={onClick}
                 style={style}
             >
                 {label}

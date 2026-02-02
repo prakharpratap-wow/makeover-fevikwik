@@ -8,26 +8,19 @@
     margin-top: 20px;
     position: relative;
     width: auto;
-    /* Shrink wrap the content */
     max-width: 100%;
     display: inline-block;
-    /* Allows container to size to image */
 
-    /* Remove fixed height, backgrounds and borders as we now use the image */
     background-color: transparent;
     border: none;
     box-shadow: none;
 
     .mirror-frame-img {
         width: auto;
-        /* Allow width to scale */
         max-width: 100%;
-        /* Prevent overflow */
         max-height: 300px;
-        /* Limit height as requested */
         display: block;
         height: auto;
-        /* Maintain aspect ratio */
     }
 
     .camera-container {

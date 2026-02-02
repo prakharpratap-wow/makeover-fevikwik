@@ -8,8 +8,9 @@ $btn-sheen: rgba(255, 255, 255, 0.8);
     border-radius: 26px;
     padding: 2px;
     position: relative;
+    width: fit-content;
 
-    div {
+    .shine {
         position: absolute;
         top: -14px;
         width: 116px;

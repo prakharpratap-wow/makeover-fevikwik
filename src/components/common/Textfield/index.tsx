@@ -1,29 +1,19 @@
-// import React from 'react';
-// import './style.scss';
 
-// const Textfield = ({ placeholder, value, onChange }: { placeholder: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
-//     return (
-//         <div className='text-field-container'>
-//             <input type="text" className='custom-textfield' placeholder={placeholder} value={value} onChange={onChange} />
-//         </div>
-//     );
-// };
-
-// export default Textfield;   
 
 
 import React, { type InputHTMLAttributes } from 'react';
+import Shine from '../../../assets/Shine';
 import './CustomTextField.scss';
 
 interface CustomTextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
 }
 
-const CustomTextField: React.FC<CustomTextFieldProps> = ({ label, ...props }) => {
+const CustomTextField: React.FC<CustomTextFieldProps> = ({ ...props }) => {
     return (
         <div id="custom-tf-container" className='text-field-wrapper'>
-            {label && <label className="custom-tf-label">{label}</label>}
             <div className="custom-tf-wrapper">
+                <Shine />
                 <input
                     type="text"
                     className="custom-tf-input"
