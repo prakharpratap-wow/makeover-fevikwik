@@ -2,14 +2,12 @@
 
 .mobile-layout {
   width: 100%;
-  max-width: 480px; // Standard mobile width constraint for desktop view
+  max-width: 480px;
   min-height: 100vh;
   margin: 0 auto;
   background-image: url('../../assets/background_.png');
   background-size: contain;
   position: relative;
-  overflow-x: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); // Shadow for desktop view separation
-  // display: flex;
-  // flex-direction: column;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  background-repeat: no-repeat;
 }

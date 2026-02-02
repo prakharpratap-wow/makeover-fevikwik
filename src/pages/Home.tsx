@@ -11,12 +11,12 @@ const Home: React.FC = () => {
     const [isCameraActive, setIsCameraActive] = useState(false);
 
 
-    const handleStartCamera = () => {
-        console.log("handleStartCamera", mirrorRef);
-        if (mirrorRef.current) {
-            mirrorRef.current.startCamera();
-        }
-    };
+    // const handleStartCamera = () => {
+    //     console.log("handleStartCamera", mirrorRef);
+    //     if (mirrorRef.current) {
+    //         mirrorRef.current.startCamera();
+    //     }
+    // };
 
     return (
         <MobileLayout>
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
                     </div>
                     <div >
 
-                        {
+                        {/* {
                             isCameraActive ? <div>
                                 <div className='d-flex gap-2'>
                                     <div className='theme-btn'>
@@ -67,7 +67,7 @@ const Home: React.FC = () => {
                                 label="Capture Object"
                                 onClick={handleStartCamera}
                             />
-                        }
+                        } */}
 
                     </div>
                 </div>

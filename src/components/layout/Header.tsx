@@ -1,15 +1,17 @@
 
 import chutkime_makeover from "../../assets/chutkime_makeover.png";
+import { useNavigate } from "react-router-dom";
 import fevikwik from "../../assets/feviwik.png";
 import usericon from "../../assets/user-icon.png";
 import menuicon from "../../assets/hamburger-menu.png";
 import './Header.scss';
 
 const Header = () => {
+    const navigate = useNavigate();
     return (
         <header className="header">
             <div className="d-flex justify-content-end gap-3 mb-3">
-                <div>
+                <div onClick={() => navigate('/')}>
                     <img src={usericon} alt="user-icon" />
                 </div>
 

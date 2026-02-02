@@ -1,4 +1,5 @@
 import { forwardRef, useRef, useState, useImperativeHandle, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import transparentFrame from "../../../assets/transparent-frame.png";
 import './style.scss';
@@ -10,9 +11,11 @@ export interface MirrorHandle {
 interface MirrorProps {
     isCameraActive: boolean;
     setIsCameraActive: (isActive: boolean) => void;
+    onCapture?: (image: string) => void;
 }
 
-const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCameraActive }, ref) => {
+const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCameraActive, onCapture }, ref) => {
+    const navigate = useNavigate();
     const videoRef = useRef<HTMLVideoElement>(null);
     const streamRef = useRef<MediaStream | null>(null);
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -22,15 +25,36 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
             setIsCameraActive(true);
             setCapturedImage(null);
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                // Check if back camera is available
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+                const backCamera = videoDevices.find(device => device.label.toLowerCase().includes('back'));
+
+                const constraints = {
+                    video: {
+                        facingMode: backCamera ? { exact: 'environment' } : 'user'
+                    }
+                };
+
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                 }
                 streamRef.current = stream;
             } catch (err) {
                 console.error("Error accessing camera:", err);
-                alert("Could not access camera. Please allow camera permissions.");
-                setIsCameraActive(false);
+                // Fallback to any camera if specific constraint fails
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                    }
+                    streamRef.current = stream;
+                } catch (fallbackErr) {
+                    console.error("Fallback camera error:", fallbackErr);
+                    alert("Could not access camera. Please allow camera permissions.");
+                    setIsCameraActive(false);
+                }
             }
         }
     }));
@@ -49,11 +73,22 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
             canvas.height = videoRef.current.videoHeight;
             const ctx = canvas.getContext('2d');
             if (ctx) {
+                // Mirror the image if using front camera (default behavior usually needs mirroring for user experience, but back camera shouldn't be mirrored)
+                // For now, keeping existing behavior or simple capture
                 ctx.drawImage(videoRef.current, 0, 0);
+                // If we want to flip: 
+                // ctx.translate(canvas.width, 0);
+                // ctx.scale(-1, 1);
+                // ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height); // readjust draw params
+
                 const imageUrl = canvas.toDataURL('image/png');
-                setCapturedImage(imageUrl);
+                setCapturedImage(imageUrl); // Keep local state for display if needed
                 stopCamera();
                 setIsCameraActive(false);
+
+                if (onCapture) {
+                    onCapture(imageUrl);
+                }
             }
         }
     };
@@ -76,6 +111,7 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
         stopCamera();
         setCapturedImage(null);
         setIsCameraActive(false);
+        navigate('/');
     }
 
     // Effect to handle camera stream assignment when isCameraActive changes to true
@@ -106,6 +142,31 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
         };
     }, []);
 
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // ... existing useEffect ...
+
+    const handleUploadClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const imageUrl = reader.result as string;
+                setCapturedImage(imageUrl);
+                stopCamera();
+                setIsCameraActive(false);
+                if (onCapture) {
+                    onCapture(imageUrl);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const showControls = isCameraActive || capturedImage;
 
     return (
@@ -130,11 +191,24 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
 
             {showControls && (
                 <div className="mirror-controls mt-3 d-flex gap-2 justify-content-center">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        ref={fileInputRef}
+                        style={{ display: 'none' }}
+                        onChange={handleFileChange}
+                    />
                     {isCameraActive && (
-                        <Button
-                            label="CAPTURE"
-                            onClick={handleCapture}
-                        />
+                        <>
+                            <Button
+                                label="CLICK"
+                                onClick={handleCapture}
+                            />
+                            <Button
+                                label="UPLOAD"
+                                onClick={handleUploadClick}
+                            />
+                        </>
                     )}
                     {capturedImage && (
                         <Button

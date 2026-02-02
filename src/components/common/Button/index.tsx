@@ -1,21 +1,27 @@
 import React from 'react';
+import Shine from '../../../assets/Shine';
 import './style.scss';
 
 interface ButtonProps {
     label: string;
     onClick: () => void;
     type?: "button" | "submit" | "reset";
+    style?: React.CSSProperties;
 }
 
-const Button = ({ label, onClick, type = "button" }: ButtonProps) => {
+const Button = ({ label, onClick, type = "button", style }: ButtonProps) => {
     return (
-        <button
-            type={type}
-            className="glossy-btn"
-            onClick={onClick}
-        >
-            {label}
-        </button>
+        <div className='btn-wrapper'>
+            <Shine />
+            <button
+                type={type}
+                className="glossy-btn"
+                onClick={onClick}
+                style={style}
+            >
+                {label}
+            </button>
+        </div>
     );
 };
 
