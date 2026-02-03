@@ -76,7 +76,7 @@ const ThemeSelection: React.FC = () => {
 
 
                         <Button
-                            label="Chutki Mein Makeover"
+                            label="CHUTKI MEIN MAKEOVER"
                             onClick={handleMakeover}
                             style={{ padding: "13px 40px", fontSize: "18px" }}
                         />

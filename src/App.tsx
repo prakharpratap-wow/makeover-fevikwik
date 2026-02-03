@@ -7,7 +7,11 @@ import ThemeSelection from './pages/ThemeSelection';
 import Result from './pages/Result';
 import Register from './pages/Register';
 import Otp from './pages/Otp';
-import Login from './pages/Login'; // Keeping Login if it's separate or needed
+import Login from './pages/Login';
+import HowItWorks from './pages/HowItWorks';
+import Gallery from './pages/Gallery';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 
 const PageTracker = () => {
   usePageTracking();
@@ -27,6 +31,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/otp" element={<Otp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </Router>
     </MakeoverProvider>
