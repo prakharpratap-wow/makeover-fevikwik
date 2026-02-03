@@ -42,5 +42,15 @@
 
     }
 
+    &.selected {
+      .theme-name {
+        background-color: #003374;
+        color: #82a7cc;
+      }
+    }
+
   }
+
+
+
 }

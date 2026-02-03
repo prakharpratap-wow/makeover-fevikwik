@@ -7,6 +7,7 @@ import { useMakeover } from '../context/MakeoverContext';
 import poweredBy from "../assets/poweredby.png";
 import '../styles/auth.scss';
 import CustomTextField from '../components/common/Textfield';
+import otpBg from "../assets/background_otp.png"
 
 const Otp: React.FC = () => {
     const navigate = useNavigate();
@@ -46,7 +47,7 @@ const Otp: React.FC = () => {
         <MobileLayout>
             <Header />
             <div className='home-content d-flex flex-column align-items-center justify-content-center'>
-                <div className="auth-card" style={{ backgroundSize: "cover", paddingBottom: "0px" }}>
+                <div className="auth-card" style={{ backgroundImage: `url(${otpBg})` }}>
                     <h2 className="auth-title">Enter 4 Digit <br /> OTP Code</h2>
 
                     <CustomTextField

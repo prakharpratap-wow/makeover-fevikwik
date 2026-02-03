@@ -55,21 +55,7 @@ const ThemeSelection: React.FC = () => {
                     </div>
 
                     <div className="mt-4 w-100 d-flex flex-column align-items-center gap-3">
-                        {/* <div className="d-flex flex-wrap justify-content-center gap-2">
-                            {THEMES.map((theme) => (
-                                <div
-                                    key={theme}
-                                    className={`theme-btn ${selectedTheme === theme ? 'selected' : ''}`}
-                                    onClick={() => handleThemeSelect(theme)}
-                                    style={{ cursor: 'pointer', border: selectedTheme === theme ? '2px solid yellow' : 'none' }}
-                                >
-                                    <Shine />
-                                    <div className="theme-name">
-                                        {theme}
-                                    </div>
-                                </div>
-                            ))}
-                        </div> */}
+
                         <div className="d-flex flex-wrap justify-content-center" style={{ maxWidth: "400px" }}>
                             {THEMES.map((theme) => (
                                 <div key={theme} className="p-1">
@@ -78,7 +64,7 @@ const ThemeSelection: React.FC = () => {
                                         onClick={() => handleThemeSelect(theme)}
                                         style={{
                                             cursor: 'pointer',
-                                            border: selectedTheme === theme ? '2px solid yellow' : 'none'
+                                            // border: selectedTheme === theme ? '2px solid yellow' : 'none'
                                         }}
                                     >
                                         <Shine />

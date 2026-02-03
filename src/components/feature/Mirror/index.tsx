@@ -74,16 +74,13 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
             canvas.height = videoRef.current.videoHeight;
             const ctx = canvas.getContext('2d');
             if (ctx) {
-                // Mirror the image if using front camera (default behavior usually needs mirroring for user experience, but back camera shouldn't be mirrored)
-                // For now, keeping existing behavior or simple capture
-                ctx.drawImage(videoRef.current, 0, 0);
-                // If we want to flip: 
-                // ctx.translate(canvas.width, 0);
-                // ctx.scale(-1, 1);
-                // ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height); // readjust draw params
+                // Mirror the image to match the user-facing camera preview
+                ctx.translate(canvas.width, 0);
+                ctx.scale(-1, 1);
+                ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
                 const imageUrl = canvas.toDataURL('image/png');
-                setCapturedImage(imageUrl); // Keep local state for display if needed
+                setCapturedImage(imageUrl);
                 stopCamera();
                 setIsCameraActive(false);
 

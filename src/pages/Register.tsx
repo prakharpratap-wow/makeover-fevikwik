@@ -49,6 +49,7 @@ const Register: React.FC = () => {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
+                            autoComplete="off"
                         />
                     </div>
 
@@ -58,6 +59,7 @@ const Register: React.FC = () => {
                             name="whatsapp"
                             value={formData.whatsapp}
                             onChange={handleChange}
+                            autoComplete="off"
                         />
                     </div>
 
@@ -67,6 +69,7 @@ const Register: React.FC = () => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
+                            autoComplete="off"
                         />
                     </div>
 
