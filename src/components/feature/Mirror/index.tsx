@@ -24,33 +24,28 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
             setIsCameraActive(true);
             setCapturedImage(null);
             try {
-                // Check if back camera is available
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const videoDevices = devices.filter(device => device.kind === 'videoinput');
-                const backCamera = videoDevices.find(device => device.label.toLowerCase().includes('back'));
+                // Try to get back camera explicitly using exact keyword
+                // This is the most reliable way to Force back camera on mobile
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: { exact: 'environment' } }
+                });
 
-                const constraints = {
-                    video: {
-                        facingMode: backCamera ? { exact: 'environment' } : 'user'
-                    }
-                };
-
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                 }
                 streamRef.current = stream;
             } catch (err) {
-                console.error("Error accessing camera:", err);
-                // Fallback to any camera if specific constraint fails
+                console.log("Back camera not available or error, falling back to any camera", err);
                 try {
+                    // Fallback to any camera (likely front or default)
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
                     if (videoRef.current) {
                         videoRef.current.srcObject = stream;
                     }
                     streamRef.current = stream;
                 } catch (fallbackErr) {
-                    console.error("Fallback camera error:", fallbackErr);
+                    console.error("Camera access error:", fallbackErr);
                     alert("Could not access camera. Please allow camera permissions.");
                     setIsCameraActive(false);
                 }

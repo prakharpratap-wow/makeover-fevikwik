@@ -35,7 +35,7 @@ const Gallery: React.FC = () => {
 
                 <div className="footer-action" onClick={handleMakeoverClick}>
                     <div className="plus-icon-box">
-                        <img src={add} alt="add" />
+                        <img src={add} alt="add" style={{ borderRadius: "8px" }} />
                     </div>
                     <div className="action-text">
                         CHUTKI MEIN<br />MAKEOVER
