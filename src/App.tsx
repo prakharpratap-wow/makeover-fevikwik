@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MakeoverProvider } from './context/MakeoverContext';
-import { usePageTracking } from './hooks/usePageTracking';
+import { useLocation } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Capture from './pages/Capture';
 import ThemeSelection from './pages/ThemeSelection';
@@ -13,12 +13,36 @@ import Gallery from './pages/Gallery';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 
+import { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { initGA, trackPageView } from './services/analytics';
+
 const PageTracker = () => {
-  usePageTracking();
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageView(location.pathname + location.search);
+  }, [location]);
+
   return null;
 };
 
 function App() {
+  useEffect(() => {
+    // Initialize Google Analytics
+    initGA();
+
+    // Check for Client ID
+    const clientId = localStorage.getItem('clientId');
+    if (!clientId) {
+      const newClientId = uuidv4();
+      localStorage.setItem('clientId', newClientId);
+      console.log('Generated new Client ID:', newClientId);
+    } else {
+      console.log('Existing Client ID:', clientId);
+    }
+  }, []);
+
   return (
     <MakeoverProvider>
       <Router>

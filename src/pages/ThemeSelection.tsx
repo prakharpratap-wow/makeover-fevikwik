@@ -64,7 +64,6 @@ const ThemeSelection: React.FC = () => {
                                         onClick={() => handleThemeSelect(theme)}
                                         style={{
                                             cursor: 'pointer',
-                                            // border: selectedTheme === theme ? '2px solid yellow' : 'none'
                                         }}
                                     >
                                         <Shine />

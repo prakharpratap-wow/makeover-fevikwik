@@ -1,5 +1,4 @@
 import { forwardRef, useRef, useState, useImperativeHandle, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import transparentFrame from "../../../assets/transparent-frame.png";
 import ellipse from "../../../assets/Ellipse_6.png"
@@ -16,7 +15,6 @@ interface MirrorProps {
 }
 
 const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCameraActive, onCapture }, ref) => {
-    const navigate = useNavigate();
     const videoRef = useRef<HTMLVideoElement>(null);
     const streamRef = useRef<MediaStream | null>(null);
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -91,26 +89,26 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
         }
     };
 
-    const handleRetake = async () => {
-        setCapturedImage(null);
-        setIsCameraActive(true);
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream;
-            }
-            streamRef.current = stream;
-        } catch (err) {
-            console.error("Error restarting camera:", err);
-        }
-    };
+    // const handleRetake = async () => {
+    //     setCapturedImage(null);
+    //     setIsCameraActive(true);
+    //     try {
+    //         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    //         if (videoRef.current) {
+    //             videoRef.current.srcObject = stream;
+    //         }
+    //         streamRef.current = stream;
+    //     } catch (err) {
+    //         console.error("Error restarting camera:", err);
+    //     }
+    // };
 
-    const handleClose = () => {
-        stopCamera();
-        setCapturedImage(null);
-        setIsCameraActive(false);
-        navigate('/');
-    }
+    // const handleClose = () => {
+    //     stopCamera();
+    //     setCapturedImage(null);
+    //     setIsCameraActive(false);
+    //     navigate('/');
+    // }
 
     // Effect to handle camera stream assignment when isCameraActive changes to true
     // This handles the case where startCamera sets the state, but we need to wait for render to attach ref

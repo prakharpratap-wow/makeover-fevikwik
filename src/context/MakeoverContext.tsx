@@ -15,8 +15,9 @@ interface MakeoverContextType {
     setResultImage: (image: string | null) => void;
     userData: UserData | null;
     setUserData: (data: UserData | null) => void;
-    mirrorText: string | null; // For dynamic text updates in the mirror
+    mirrorText: string | null;
     setMirrorText: (text: string | null) => void;
+    resetState: () => void;
 }
 
 const MakeoverContext = createContext<MakeoverContextType | undefined>(undefined);
@@ -27,6 +28,14 @@ export const MakeoverProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [resultImage, setResultImage] = useState<string | null>(null);
     const [userData, setUserData] = useState<UserData | null>(null);
     const [mirrorText, setMirrorText] = useState<string | null>(null);
+
+    const resetState = () => {
+        setCapturedImage(null);
+        setSelectedTheme(null);
+        setResultImage(null);
+        setUserData(null);
+        setMirrorText(null);
+    };
 
     return (
         <MakeoverContext.Provider value={{
@@ -39,7 +48,8 @@ export const MakeoverProvider: FC<{ children: ReactNode }> = ({ children }) => {
             userData,
             setUserData,
             mirrorText,
-            setMirrorText
+            setMirrorText,
+            resetState
         }}>
             {children}
         </MakeoverContext.Provider>

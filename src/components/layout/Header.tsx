@@ -6,18 +6,25 @@ import MenuPopup from "./MenuPopup";
 import fevikwik from "../../assets/feviwik.png";
 import usericon from "../../assets/user-icon.png";
 import menuicon from "../../assets/hamburger-menu.png";
+import { useMakeover } from "../../context/MakeoverContext";
 import './Header.scss';
 
 const Header = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const { resetState } = useMakeover();
+
+    const handleHomeClick = () => {
+        resetState();
+        navigate('/');
+    };
 
     return (
         <>
             <header className="header">
                 <div className="d-flex justify-content-end gap-3 mb-3">
-                    <div onClick={() => navigate('/')}>
+                    <div onClick={handleHomeClick} style={{ cursor: 'pointer' }}>
                         <img src={usericon} alt="user-icon" />
                     </div>
 

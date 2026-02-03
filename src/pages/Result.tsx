@@ -7,6 +7,7 @@ import { useMakeover } from '../context/MakeoverContext';
 import transparentFrame from "../assets/transparent-frame.png";
 import '../components/feature/Mirror/style.scss';
 import poweredBy from "../assets/poweredby.png";
+import { generateVideo } from '../services/api';
 
 const Result: React.FC = () => {
     const navigate = useNavigate();
@@ -20,20 +21,27 @@ const Result: React.FC = () => {
     }, [capturedImage, navigate]);
 
     useEffect(() => {
-        // Simulate API call
         const timer = setTimeout(() => {
-            // In a real app, we would send capturedImage and selectedTheme to backend
-            // For now, we just use the captured image as the "result" or a placeholder
-            // simluating a change.
-            setResultImage(capturedImage); // Just showing the same image for now as POC
+            setResultImage(capturedImage);
             setIsLoading(false);
-        }, 3000); // 3 seconds loading
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [capturedImage, selectedTheme, setResultImage]);
 
-    const handleGenerateVideo = () => {
-        navigate('/register');
+    const handleGenerateVideo = async () => {
+        try {
+            await generateVideo({
+                theme: selectedTheme,
+                image: capturedImage,
+                clientId: localStorage.getItem('clientId')
+            });
+            navigate('/register');
+        } catch (error) {
+            console.error("Video generation failed:", error);
+            // Navigate anyway or show error? Assuming navigate for flow
+            navigate('/register');
+        }
     };
 
     const handleRetake = () => {

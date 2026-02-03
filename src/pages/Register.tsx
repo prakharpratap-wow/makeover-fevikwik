@@ -32,7 +32,7 @@ const Register: React.FC = () => {
             alert("Please fill all required fields and accept terms.");
             return;
         }
-        setUserData({ name: formData.name, phone: formData.phone, email: formData.email });
+        setUserData({ name: formData.name, phone: formData.whatsapp, email: formData.email });
         navigate('/otp');
     };
 

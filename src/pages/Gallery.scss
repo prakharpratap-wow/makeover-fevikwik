@@ -1,0 +1,85 @@
+.gallery-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 40px;
+        width: 100%;
+        max-width: 350px; // constrain width on larger screens or just to fit the design
+    }
+
+    .gallery-item {
+        border-radius: 16px;
+        padding: 1px;
+        background: linear-gradient(180deg, #FFF 0%, #03678D 52.4%, #FFF 100%);
+        width: 100%;
+        aspect-ratio: 1/1; // Make it square
+        display: flex; // Changed from grid to flex for better control if needed, but grid is also fine
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        .shine {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100%;
+            height: 40px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .item-content {
+            background-color: #82a7cc;
+            width: calc(100% - 2px);
+            height: calc(100% - 2px);
+            display: grid;
+            place-content: center;
+            border-radius: 15px; // Slightly less than parent
+            font-size: 16px;
+            font-weight: 700;
+            color: #003374;
+        }
+    }
+
+    .footer-action {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: auto;
+        gap: 10px;
+        cursor: pointer;
+
+        .plus-icon-box {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #FFF;
+            border-radius: 8px;
+            display: grid;
+            place-content: center;
+            background: rgba(255, 255, 255, 0.2); // Semi-transparent bg
+
+            span {
+                color: #FFF;
+                font-size: 30px;
+                font-weight: bold;
+                line-height: 1;
+                margin-top: -4px; // Optical adjustment
+            }
+        }
+
+        .action-text {
+            color: #EFEE2C;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+        }
+    }
+}

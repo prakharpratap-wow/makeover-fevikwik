@@ -4,7 +4,6 @@ import MobileLayout from '../components/layout/MobileLayout';
 import Header from '../components/layout/Header';
 import Mirror, { type MirrorHandle } from '../components/feature/Mirror';
 import { useMakeover } from '../context/MakeoverContext';
-import Button from '../components/common/Button';
 
 const Capture: React.FC = () => {
     const navigate = useNavigate();
@@ -47,9 +46,7 @@ const Capture: React.FC = () => {
         }
     };
 
-    const triggerFileInput = () => {
-        fileInputRef.current?.click();
-    };
+
 
     return (
         <MobileLayout>
