@@ -7,12 +7,13 @@ import { useMakeover } from '../context/MakeoverContext';
 import transparentFrame from "../assets/transparent-frame.png";
 import '../components/feature/Mirror/style.scss';
 import poweredBy from "../assets/poweredby.png";
-import { generateVideo } from '../services/api';
+import { useGenerateVideo } from '../hooks/useGenerateVideo';
 
 const Result: React.FC = () => {
     const navigate = useNavigate();
     const { capturedImage, selectedTheme, setResultImage, resultImage } = useMakeover();
     const [isLoading, setIsLoading] = useState(true);
+    const { mutate: generateVideoMutate, isPending: isVideoGenerating } = useGenerateVideo();
 
     useEffect(() => {
         if (!capturedImage) {
@@ -29,18 +30,20 @@ const Result: React.FC = () => {
         return () => clearTimeout(timer);
     }, [capturedImage, selectedTheme, setResultImage]);
 
-    const handleGenerateVideo = async () => {
-        try {
-            await generateVideo({
-                theme: selectedTheme,
-                image: capturedImage,
-                clientId: localStorage.getItem('clientId')
-            });
-            navigate('/register');
-        } catch (error) {
-            console.error("Video generation failed:", error);
-            navigate('/register');
-        }
+    const handleGenerateVideo = () => {
+        generateVideoMutate({
+            theme: selectedTheme,
+            image: capturedImage,
+            clientId: localStorage.getItem('clientId')
+        }, {
+            onSuccess: () => {
+                navigate('/register');
+            },
+            onError: (error) => {
+                console.error("Video generation failed:", error);
+                navigate('/register'); // Fallback navigation even on error as per previous logic
+            }
+        });
     };
 
     const handleRetake = () => {
@@ -86,11 +89,13 @@ const Result: React.FC = () => {
                                 label="Phir se Makeover"
                                 onClick={handleRetake}
                                 style={{ whiteSpace: "nowrap", fontSize: "14px", padding: "11px 15px" }}
+                                disabled={isVideoGenerating}
                             />
                             <Button
-                                label="Generate Video"
+                                label={isVideoGenerating ? "Generating..." : "Generate Video"}
                                 onClick={handleGenerateVideo}
                                 style={{ background: 'linear-gradient(180deg, #AABCCF 0%, #ECEFF4 100%)', color: '#003374', whiteSpace: "nowrap", fontSize: "14px", padding: "11px 15px" }}
+                                isLoading={isVideoGenerating}
                             />
                         </div>
                     )}

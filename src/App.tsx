@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MakeoverProvider } from './context/MakeoverContext';
 import { useLocation } from 'react-router-dom';
+import AnalyticsTracker from './components/AnalyticsTracker';
 import Landing from './pages/Landing';
 import Capture from './pages/Capture';
 import ThemeSelection from './pages/ThemeSelection';
@@ -47,6 +48,7 @@ function App() {
     <MakeoverProvider>
       <Router>
         <PageTracker />
+        <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/capture" element={<Capture />} />
