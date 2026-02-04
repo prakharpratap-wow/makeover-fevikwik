@@ -39,7 +39,6 @@ const Result: React.FC = () => {
             navigate('/register');
         } catch (error) {
             console.error("Video generation failed:", error);
-            // Navigate anyway or show error? Assuming navigate for flow
             navigate('/register');
         }
     };

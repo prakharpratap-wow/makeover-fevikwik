@@ -23,33 +23,8 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
         startCamera: async () => {
             setIsCameraActive(true);
             setCapturedImage(null);
-            try {
-                // Try to get back camera explicitly using exact keyword
-                // This is the most reliable way to Force back camera on mobile
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: { exact: 'environment' } }
-                });
-
-                if (videoRef.current) {
-                    videoRef.current.srcObject = stream;
-                }
-                streamRef.current = stream;
-            } catch (err) {
-                console.log("Back camera not available or error, falling back to any camera", err);
-                try {
-                    // Fallback to any camera (likely front or default)
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-                    if (videoRef.current) {
-                        videoRef.current.srcObject = stream;
-                    }
-                    streamRef.current = stream;
-                } catch (fallbackErr) {
-                    console.error("Camera access error:", fallbackErr);
-                    alert("Could not access camera. Please allow camera permissions.");
-                    setIsCameraActive(false);
-                }
-            }
+            // We only set the flag here. The actual camera acquisition is handled
+            // by the useEffect below to prevent race conditions.
         }
     }));
 
@@ -84,46 +59,58 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
         }
     };
 
-    // const handleRetake = async () => {
-    //     setCapturedImage(null);
-    //     setIsCameraActive(true);
-    //     try {
-    //         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    //         if (videoRef.current) {
-    //             videoRef.current.srcObject = stream;
-    //         }
-    //         streamRef.current = stream;
-    //     } catch (err) {
-    //         console.error("Error restarting camera:", err);
-    //     }
-    // };
-
-    // const handleClose = () => {
-    //     stopCamera();
-    //     setCapturedImage(null);
-    //     setIsCameraActive(false);
-    //     navigate('/');
-    // }
-
     // Effect to handle camera stream assignment when isCameraActive changes to true
     // This handles the case where startCamera sets the state, but we need to wait for render to attach ref
     useEffect(() => {
+        let isMounted = true;
+
         const startStream = async () => {
             if (isCameraActive && !capturedImage && !streamRef.current) {
                 try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    if (videoRef.current) {
-                        videoRef.current.srcObject = stream;
+                    // Try to get back camera explicitly using exact keyword
+                    // This is the most reliable way to Force back camera on mobile
+                    console.log("Attempting to access back camera...");
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: { exact: 'environment' } }
+                    });
+
+                    if (isMounted) {
+                        if (videoRef.current) {
+                            videoRef.current.srcObject = stream;
+                        }
+                        streamRef.current = stream;
+                    } else {
+                        // component unmounted during promise, stop stream immediately
+                        stream.getTracks().forEach(track => track.stop());
                     }
-                    streamRef.current = stream;
                 } catch (err) {
-                    console.error("Error accessing camera:", err);
-                    setIsCameraActive(false);
+                    console.log("Back camera not available or error, falling back to any camera", err);
+                    try {
+                        // Fallback to any camera (likely front or default)
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+                        if (isMounted) {
+                            if (videoRef.current) {
+                                videoRef.current.srcObject = stream;
+                            }
+                            streamRef.current = stream;
+                        } else {
+                            stream.getTracks().forEach(track => track.stop());
+                        }
+                    } catch (fallbackErr) {
+                        console.error("Camera access error:", fallbackErr);
+                        alert("Could not access camera. Please allow camera permissions.");
+                        if (isMounted) setIsCameraActive(false);
+                    }
                 }
             }
         }
 
         startStream();
+
+        return () => {
+            isMounted = false;
+        };
 
     }, [isCameraActive, capturedImage, setIsCameraActive]);
 
