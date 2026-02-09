@@ -11,11 +11,15 @@ const Gallery: React.FC = () => {
     const navigate = useNavigate();
     const { resetState } = useMakeover();
     // Placeholder data for gallery items
-    const items = Array(6).fill("Creation 1");
+    const items = Array.from({ length: 6 }, (_, i) => `Creation ${i + 1}`);
 
     const handleMakeoverClick = () => {
         resetState();
         navigate('/');
+    };
+
+    const handleItemClick = (index: number) => {
+        navigate(`/creation/${index + 1}`);
     };
 
     return (
@@ -24,7 +28,7 @@ const Gallery: React.FC = () => {
             <div className="home-content gallery-container">
                 <div className="gallery-grid">
                     {items.map((item, index) => (
-                        <div key={index} className="gallery-item">
+                        <div key={index} className="gallery-item" onClick={() => handleItemClick(index)}>
                             <Shine />
                             <div className="item-content">
                                 {item}

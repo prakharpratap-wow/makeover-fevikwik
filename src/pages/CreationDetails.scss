@@ -1,0 +1,98 @@
+.creation-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    color: #FFF;
+
+
+
+    .tabs-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        margin-top: 10px;
+
+        .tab-btn {
+            padding: 8px 30px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFF;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &.active {
+                background: #EFEE2C;
+                color: #003374; // Dark blue text for contrast on yellow
+                border-color: #EFEE2C;
+            }
+        }
+    }
+
+    .mirror-display-area {
+        position: relative;
+        width: 280px; // Adjust based on frame aspect ratio
+        height: 380px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .mirror-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            .frame-img {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            .content-placeholder {
+                position: absolute;
+                top: 2%;
+                left: 10%;
+                width: 78%;
+                height: 92%;
+                z-index: 1;
+                background: linear-gradient(180deg, #1a2a40 0%, #0d1620 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .placeholder-fill {
+                    color: rgba(255, 255, 255, 0.3);
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .action-icons {
+        display: flex;
+        gap: 30px;
+        height: 40px; // Fixed height to prevent jump when icons disappear
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+
+        .icon-btn {
+            cursor: pointer;
+            color: #000; // Icons seem dark in the user image, or standard black
+            background: transparent;
+
+            svg {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+}

@@ -12,9 +12,11 @@ interface MirrorProps {
     isCameraActive: boolean;
     setIsCameraActive: (isActive: boolean) => void;
     onCapture?: (image: string) => void;
+    onBack?: () => void;
+    onClose?: () => void;
 }
 
-const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCameraActive, onCapture }, ref) => {
+const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCameraActive, onCapture, onBack, onClose }, ref) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const streamRef = useRef<MediaStream | null>(null);
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -149,6 +151,26 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
 
     return (
         <div className="mirror-wrapper">
+            {/* Back Arrow - Conceptually outside flex flow but visually positioned relative to screen/container if needs serve as overlay */}
+            {onBack && (
+                <div className="back-arrow-container" onClick={onBack}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 12H5" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M12 19L5 12L12 5" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </div>
+            )}
+
+            {/* Close Icon - displayed when onClose is provided (typically in preview mode) */}
+            {onClose && (
+                <div className="close-icon-container" onClick={onClose}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M6 6L18 18" stroke="#FFD700" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </div>
+            )}
+
             <div className="mirror-frame-container">
                 <img src={transparentFrame} alt="Frame" className="mirror-frame-img" />
                 <div className="camera-container">
@@ -184,7 +206,7 @@ const Mirror = forwardRef<MirrorHandle, MirrorProps>(({ isCameraActive, setIsCam
                             </div>
 
                             <Button
-                                label="Upload"
+                                label="Upload from Gallery"
                                 onClick={handleUploadClick}
                                 style={{ padding: "5.5px 40px", fontSize: "14px" }}
                             />

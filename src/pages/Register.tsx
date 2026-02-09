@@ -7,6 +7,7 @@ import CustomTextField from '../components/common/Textfield';
 import { useMakeover } from '../context/MakeoverContext';
 import poweredBy from "../assets/poweredby.png";
 import '../styles/auth.scss';
+import { toast } from 'react-toastify';
 
 const Register: React.FC = () => {
     const navigate = useNavigate();
@@ -28,10 +29,34 @@ const Register: React.FC = () => {
     };
 
     const handleSendOtp = () => {
+        // Basic requirement check
         if (!formData.name || !formData.whatsapp || !formData.terms) {
-            alert("Please fill all required fields and accept terms.");
+            toast.error("Please fill all required fields and accept terms.");
             return;
         }
+
+        // Email validation (if provided)
+        if (formData.email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                toast.error("Please enter a valid email address.");
+                return;
+            }
+        }
+
+        // WhatsApp number validation
+        const phoneRegex = /^[1-9][0-9]{9}$/;
+        if (!phoneRegex.test(formData.whatsapp)) {
+            if (formData.whatsapp.startsWith('0')) {
+                toast.error("Phone number cannot start with 0.");
+            } else if (formData.whatsapp.length !== 10) {
+                toast.error("Phone number must be exactly 10 digits.");
+            } else {
+                toast.error("Please enter a valid 10-digit phone number.");
+            }
+            return;
+        }
+
         setUserData({ name: formData.name, phone: formData.whatsapp, email: formData.email });
         navigate('/otp');
     };

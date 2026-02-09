@@ -14,10 +14,13 @@ import HowItWorks from './pages/HowItWorks';
 import Gallery from './pages/Gallery';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import CreationDetails from './pages/CreationDetails';
 
 import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { initGA, trackPageView } from './services/analytics';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PageTracker = () => {
   const location = useLocation();
@@ -28,6 +31,9 @@ const PageTracker = () => {
 
   return null;
 };
+
+
+// ... (existing imports)
 
 function App() {
   useEffect(() => {
@@ -51,6 +57,7 @@ function App() {
         <PageTitleUpdater />
         <PageTracker />
         <AnalyticsTracker />
+        <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/capture" element={<Capture />} />
@@ -61,6 +68,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/creation/:id" element={<CreationDetails />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
         </Routes>
