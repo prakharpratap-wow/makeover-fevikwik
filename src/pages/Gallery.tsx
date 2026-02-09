@@ -6,6 +6,7 @@ import { useMakeover } from '../context/MakeoverContext';
 import Shine from '../assets/Shine';
 import add from '../assets/add.png';
 import './Gallery.scss';
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
 
 const Gallery: React.FC = () => {
     const navigate = useNavigate();
@@ -14,11 +15,13 @@ const Gallery: React.FC = () => {
     const items = Array.from({ length: 6 }, (_, i) => `Creation ${i + 1}`);
 
     const handleMakeoverClick = () => {
+        trackEvent(ANALYTICS_CATEGORIES.GALLERY, ANALYTICS_ACTIONS.CLICK, 'Add New Creation');
         resetState();
         navigate('/');
     };
 
     const handleItemClick = (index: number) => {
+        trackEvent(ANALYTICS_CATEGORIES.GALLERY, ANALYTICS_ACTIONS.VIEW, `Creation View (${index + 1})`);
         navigate(`/creation/${index + 1}`);
     };
 

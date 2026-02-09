@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { trackUserInteraction } from '../services/analytics';
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics'; // Use trackEvent directly
 
 const AnalyticsTracker = () => {
     const location = useLocation();
@@ -30,7 +30,9 @@ const AnalyticsTracker = () => {
                 label = label.trim();
 
                 if (label) {
-                    trackUserInteraction(label, location.pathname);
+                    // Use a generic category/action for auto-tracked events, or separate them
+                    // tracking as 'Auto_Interaction' to distinguish from manual instrumentation
+                    trackEvent('Auto_Interaction', ANALYTICS_ACTIONS.CLICK, `${label} (on ${location.pathname})`);
                 }
             }
         };

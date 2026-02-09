@@ -6,6 +6,7 @@ import Button from '../components/common/Button';
 import transparentFrame from '../assets/transparent-frame.png';
 import poweredBy from "../assets/poweredby.png";
 import './CreationDetails.scss';
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
 
 // Simple SVG Icons
 const DownloadIcon = () => (
@@ -31,8 +32,26 @@ const CreationDetails: React.FC = () => {
     // const { id } = useParams(); // ID can be used for fetching data later
     const [activeTab, setActiveTab] = useState<'video' | 'image'>('video');
 
+    const handleTabChange = (tab: 'video' | 'image') => {
+        trackEvent(ANALYTICS_CATEGORIES.GALLERY, ANALYTICS_ACTIONS.CLICK, `Tab Switch: ${tab}`);
+        setActiveTab(tab);
+    };
+
     const handlePhirSeMakeover = () => {
+        trackEvent(ANALYTICS_CATEGORIES.NAVIGATION, ANALYTICS_ACTIONS.RETAKE, 'Phir se Makeover (Gallery)');
         navigate('/');
+    };
+
+    const handleDownload = () => {
+        trackEvent(ANALYTICS_CATEGORIES.VIDEO, ANALYTICS_ACTIONS.CLICK, 'Download Video');
+        // Implement download logic here
+        alert("Download started...");
+    };
+
+    const handleShare = () => {
+        trackEvent(ANALYTICS_CATEGORIES.VIDEO, ANALYTICS_ACTIONS.CLICK, 'Share Video');
+        // Implement share logic here
+        alert("Share options opened...");
     };
 
     return (
@@ -45,7 +64,7 @@ const CreationDetails: React.FC = () => {
 
                     <Button
                         label="Video"
-                        onClick={() => setActiveTab('video')}
+                        onClick={() => handleTabChange('video')}
                         style={activeTab === 'video' ? {
                             padding: "10px 30px",
                             fontSize: "14px",
@@ -61,7 +80,7 @@ const CreationDetails: React.FC = () => {
                     />
                     <Button
                         label="Image"
-                        onClick={() => setActiveTab('image')}
+                        onClick={() => handleTabChange('image')}
                         style={activeTab === 'image' ? {
                             padding: "10px 30px",
                             fontSize: "14px",
@@ -75,18 +94,6 @@ const CreationDetails: React.FC = () => {
                             fontWeight: "600"
                         }}
                     />
-                    {/* <button
-                        className={`tab-btn ${activeTab === 'video' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('video')}
-                    >
-                        Video
-                    </button>
-                    <button
-                        className={`tab-btn ${activeTab === 'image' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('image')}
-                    >
-                        Image
-                    </button> */}
                 </div>
 
                 <div className="mirror-display-area">
@@ -108,10 +115,10 @@ const CreationDetails: React.FC = () => {
                 <div className="action-icons">
                     {activeTab === 'video' && (
                         <>
-                            <div className="icon-btn">
+                            <div className="icon-btn" onClick={handleDownload} style={{ cursor: 'pointer' }}>
                                 <DownloadIcon />
                             </div>
-                            <div className="icon-btn">
+                            <div className="icon-btn" onClick={handleShare} style={{ cursor: 'pointer' }}>
                                 <ShareIcon />
                             </div>
                         </>

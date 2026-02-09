@@ -7,11 +7,13 @@ import poweredBy from "../assets/poweredby.png";
 import transparentFrame from "../assets/transparent-frame.png";
 import '../components/feature/Mirror/style.scss';
 import './Home.scss';
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
 
 const Landing: React.FC = () => {
     const navigate = useNavigate();
 
     const handleStart = () => {
+        trackEvent(ANALYTICS_CATEGORIES.NAVIGATION, ANALYTICS_ACTIONS.START, 'Capture Object');
         navigate('/capture');
     };
 

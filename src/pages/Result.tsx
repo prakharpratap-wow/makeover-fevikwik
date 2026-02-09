@@ -8,6 +8,7 @@ import transparentFrame from "../assets/transparent-frame.png";
 import '../components/feature/Mirror/style.scss';
 import poweredBy from "../assets/poweredby.png";
 import { useGenerateVideo } from '../hooks/useGenerateVideo';
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
 
 const Result: React.FC = () => {
     const navigate = useNavigate();
@@ -31,15 +32,18 @@ const Result: React.FC = () => {
     }, [capturedImage, selectedTheme, setResultImage]);
 
     const handleGenerateVideo = () => {
+        trackEvent(ANALYTICS_CATEGORIES.VIDEO, ANALYTICS_ACTIONS.START, 'Generate Video');
         generateVideoMutate({
             theme: selectedTheme,
             image: capturedImage,
             clientId: localStorage.getItem('clientId')
         }, {
             onSuccess: () => {
+                trackEvent(ANALYTICS_CATEGORIES.VIDEO, ANALYTICS_ACTIONS.SUCCESS, 'Video Generated');
                 navigate('/register');
             },
             onError: (error) => {
+                trackEvent(ANALYTICS_CATEGORIES.VIDEO, ANALYTICS_ACTIONS.ERROR, 'Video Generation Failed');
                 console.error("Video generation failed:", error);
                 navigate('/register'); // Fallback navigation even on error as per previous logic
             }
@@ -47,6 +51,7 @@ const Result: React.FC = () => {
     };
 
     const handleRetake = () => {
+        trackEvent(ANALYTICS_CATEGORIES.VIDEO, ANALYTICS_ACTIONS.RETAKE, 'Phir se Makeover');
         navigate('/capture');
     };
 

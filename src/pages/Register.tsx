@@ -8,6 +8,7 @@ import { useMakeover } from '../context/MakeoverContext';
 import poweredBy from "../assets/poweredby.png";
 import '../styles/auth.scss';
 import { toast } from 'react-toastify';
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
 
 const Register: React.FC = () => {
     const navigate = useNavigate();
@@ -57,6 +58,7 @@ const Register: React.FC = () => {
             return;
         }
 
+        trackEvent(ANALYTICS_CATEGORIES.AUTH, ANALYTICS_ACTIONS.SUBMIT, 'Register Form - Send OTP');
         setUserData({ name: formData.name, phone: formData.whatsapp, email: formData.email });
         navigate('/otp');
     };

@@ -7,6 +7,8 @@ import { useMakeover } from '../context/MakeoverContext';
 import transparentFrame from "../assets/transparent-frame.png";
 import '../components/feature/Mirror/style.scss';
 import Shine from '../assets/Shine';
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
+
 const THEMES = ['Lol', 'Pookie', 'Dhinchak', 'Macho'];
 
 const ThemeSelection: React.FC = () => {
@@ -20,16 +22,19 @@ const ThemeSelection: React.FC = () => {
     }, [capturedImage, navigate]);
 
     const handleThemeSelect = (theme: string) => {
+        trackEvent(ANALYTICS_CATEGORIES.THEME, ANALYTICS_ACTIONS.SELECTION, theme);
         setSelectedTheme(theme);
     };
 
     const handleSurpriseMe = () => {
         const randomTheme = THEMES[Math.floor(Math.random() * THEMES.length)];
+        trackEvent(ANALYTICS_CATEGORIES.THEME, ANALYTICS_ACTIONS.CLICK, `Surprise Me (Got ${randomTheme})`);
         setSelectedTheme(randomTheme);
     };
 
     const handleMakeover = () => {
         if (selectedTheme) {
+            trackEvent(ANALYTICS_CATEGORIES.THEME, ANALYTICS_ACTIONS.SUBMIT, `Chutki Mein Makeover (${selectedTheme})`);
             navigate('/result');
         } else {
             alert("Please select a theme!");

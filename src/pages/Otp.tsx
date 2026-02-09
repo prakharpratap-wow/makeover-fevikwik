@@ -8,6 +8,7 @@ import poweredBy from "../assets/poweredby.png";
 import '../styles/auth.scss';
 import CustomTextField from '../components/common/Textfield';
 import otpBg from "../assets/background_otp.png"
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
 
 const Otp: React.FC = () => {
     const navigate = useNavigate();
@@ -30,15 +31,18 @@ const Otp: React.FC = () => {
 
     const handleVerify = () => {
         if (otp === '1234') {
+            trackEvent(ANALYTICS_CATEGORIES.AUTH, ANALYTICS_ACTIONS.SUCCESS, 'OTP Verified');
             alert("Verification Successful! (Flow End)");
             // Redirect to home or result?
             navigate('/');
         } else {
+            trackEvent(ANALYTICS_CATEGORIES.AUTH, ANALYTICS_ACTIONS.ERROR, 'OTP Verification Failed');
             alert("Invalid OTP! Try 1234");
         }
     };
 
     const handleResend = () => {
+        trackEvent(ANALYTICS_CATEGORIES.AUTH, ANALYTICS_ACTIONS.CLICK, 'Resend OTP');
         setTimer(10);
         alert("OTP Resent!");
     };

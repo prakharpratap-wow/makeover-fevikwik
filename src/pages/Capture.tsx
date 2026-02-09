@@ -5,6 +5,7 @@ import Header from '../components/layout/Header';
 import Mirror, { type MirrorHandle } from '../components/feature/Mirror';
 import { useMakeover } from '../context/MakeoverContext';
 import Button from '../components/common/Button';  // Assuming we have a Button component
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
 
 const Capture: React.FC = () => {
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ const Capture: React.FC = () => {
     }, [setCapturedImage]); // Add setCapturedImage dependency
 
     const handleCapture = (image: string) => {
+        trackEvent(ANALYTICS_CATEGORIES.CAMERA, ANALYTICS_ACTIONS.CLICK, 'Shutter Button');
         setCapturedImage(image);
         // Do NOT navigate yet.
         // The Mirror component will hide its own controls (shutter/upload) because isCameraActive becomes false.
@@ -51,6 +53,7 @@ const Capture: React.FC = () => {
     // Let's remove the redundant one in Capture.tsx.
 
     const handleRetake = async () => {
+        trackEvent(ANALYTICS_CATEGORIES.CAMERA, ANALYTICS_ACTIONS.RETAKE, 'Retake');
         setCapturedImage(null);
         if (mirrorRef.current) {
             await mirrorRef.current.startCamera();
@@ -58,6 +61,7 @@ const Capture: React.FC = () => {
     };
 
     const handleSubmit = () => {
+        trackEvent(ANALYTICS_CATEGORIES.CAMERA, ANALYTICS_ACTIONS.SUBMIT, 'Submit Photo');
         navigate('/theme');
     };
 

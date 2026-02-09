@@ -4,17 +4,20 @@ import MobileLayout from '../components/layout/MobileLayout';
 import Button from '../components/common/Button';
 import poweredBy from "../assets/poweredby.png"
 import './Auth.scss';
+import { trackEvent, ANALYTICS_CATEGORIES, ANALYTICS_ACTIONS } from '../services/analytics';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [activeScreen, setActiveScreen] = useState('login');
 
     const handleLogin = () => {
+        trackEvent(ANALYTICS_CATEGORIES.AUTH, ANALYTICS_ACTIONS.SUCCESS, 'Login Successful');
         alert("Logged in successfully!");
     };
 
 
     const handleOtpRequest = () => {
+        trackEvent(ANALYTICS_CATEGORIES.AUTH, ANALYTICS_ACTIONS.SUBMIT, 'Login - Send OTP');
         setActiveScreen('otp');
     };
 
